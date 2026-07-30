@@ -10,11 +10,15 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-### 1. Dependency Injection & Parameter Injection
-> *"In JavaScript, I used to just import a function directly. In C#, I noticed heavy use of Dependency Injection. In Minimal APIs, calling database context or mappers is surprisingly clean—you just pass the service type as a parameter to the route handler, and ASP.NET Core resolves it automatically!"*
+### 1. Dependency Injection, Parameter Injection & Managing Parameter Bloat
+> *"In JavaScript, I used to just import a function directly. In C#, I noticed heavy use of Dependency Injection. In Minimal APIs, calling database context or mappers is clean—you pass the service type as a parameter to the handler. However, as an API grows, injecting multiple services (`IMapper`, `ApplicationDbContext`, `ILogger`, `IConfiguration`...) makes parameter lists very long and cluttered."*
 
-- **JS Approach**: Importing functions/modules manually (e.g. `import { getDb } from './db.js'`).
-- **C# Minimal API Approach**: Registering services in `builder.Services` (e.g., `AddDbContext`, `AddAutoMapper`), then requesting them directly in parameter lists (e.g., `(IMapper mapper, ApplicationDbContext db)`).
+- **JS Approach**: Importing functions/modules manually (`import { db } from './db.js'`).
+- **C# Minimal API Approach**: Injected via parameter lists `(IMapper mapper, ApplicationDbContext db, ILogger<Program> logger)`.
+- **Flutter / Dart Parallel**: Similar to Service Locators (`GetIt`) or `Provider.of<T>(context)` in Flutter, where a central container provides dependencies.
+- **Handling Long Parameter Lists in C#**: 
+  - Using the **`[AsParameters]`** attribute in ASP.NET Core to group multiple injected services into a single container struct/class (e.g. `([AsParameters] TodoServices services)`).
+  - Encapsulating logic inside dedicated Service/Handler classes or MediatR patterns.
 
 ---
 
