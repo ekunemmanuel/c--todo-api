@@ -26,3 +26,7 @@ todo-api.csproj.Backup.tmp
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Local Planning & Learning Roadmap (Not tracked)
+Plans/
+
