@@ -1,0 +1,28 @@
+# Build and compilation outputs
+[Bb]in/
+[Oo]bj/
+out/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.useroptions
+*.sln.docstates
+
+# User Secrets & Local App Settings
+appsettings.Development.json
+secrets.json
+*.Secret.json
+
+# Temporary files & backups
+*.tmp
+*.log
+*.bak
+todo-api.csproj.Backup.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
