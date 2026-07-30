@@ -18,7 +18,15 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-### 2. Database Configuration & Secret Management
+### 2. Minimal APIs vs Controllers (No Controller Classes Required!)
+> *"I thought I was going to be using Controllers for everything like traditional ASP.NET Core tutorials showed. But Minimal APIs (`app.MapGet`, `app.MapPost`) mean I don't necessarily need Controller classes at all—I can map routes directly!"*
+
+- **Traditional Controller Approach**: Creating `TodoController : ControllerBase` files with attributes (`[HttpGet]`, `[HttpPost]`, `[Route]`).
+- **Minimal API Approach**: Expressive top-level route mapping directly in `Program.cs`, reducing boilerplate while keeping the API lightweight.
+
+---
+
+### 3. Database Configuration & Secret Management
 > *"Configuring a database wasn't as simple as placing a database string inside a `.env` file like I was used to in JavaScript. Visual Studio assisted with `UserSecrets` (`secrets.json`). Learning how .NET separates configuration (`appsettings.json`) from local secrets was a new experience."*
 
 - Managing sensitive connection strings outside source control using `UserSecretsId` and `builder.Configuration`.
@@ -26,7 +34,7 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-### 3. Data Transfer Objects (DTOs) & AutoMapper
+### 4. Data Transfer Objects (DTOs) & AutoMapper
 > *"In JS, to hide sensitive properties before returning a response, you might filter or delete object properties manually. In C#, industry standard calls for DTOs (`TodoCreateDTO`, `TodoUpdateDTO`, `TodoDTO`). Using DTOs separates database entity models from public API contracts."*
 
 - **Domain Model**: `Todo.cs` (contains database metadata, constraints).
@@ -35,7 +43,7 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-### 4. Route Metadata & Response Declarations (`Produces`, `Accepts`)
+### 5. Route Metadata & Response Declarations (`Produces`, `Accepts`)
 > *"Declarative metadata like `.Produces<TodoDTO>(201)`, `.ProducesProblem(400)`, and `.Accepts<DTO>()` felt a bit verbose at first compared to un-typed JS frameworks. However, these annotations feed directly into OpenAPI/Scalar to generate automatic, interactive documentation."*
 
 - OpenAPI integration via Scalar (`app.MapScalarApiReference()`).
@@ -43,7 +51,7 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-### 5. HTTP Results & C# Pattern Matching (`is null`)
+### 6. HTTP Results & C# Pattern Matching (`is null`)
 > *"Instead of wrapping everything in manual `try-catch` blocks for basic control flow, Minimal APIs return typed `IResult` objects like `Results.Ok()`, `Results.NotFound()`, and `Results.CreatedAtRoute()`. Also, writing readable pattern matching like `if (todo is null)` felt much more expressive than JS truthiness checks!"*
 
 - Expressive C# pattern matching: `if (todo is null) return Results.NotFound();`
@@ -51,7 +59,7 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-### 6. Embracing OOP, Classes, & Access Modifiers
+### 7. Embracing OOP, Classes, & Access Modifiers
 > *"Coming from functional JavaScript where I avoided classes, writing C# forced me to embrace Object-Oriented Programming (OOP), access modifiers (`public`, `protected`, `static`), and class-based schema definitions. While learning class design and ORM mappings was a shift, it provides strong compile-time safety."*
 
 ---
