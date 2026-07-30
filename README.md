@@ -4,16 +4,16 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 
 ---
 
-## 📝 Developer Journal: Learning C# & Minimal APIs (A JavaScript Developer's Perspective)
+## 📝 Developer Journal: Learning C# & Minimal APIs (A TypeScript Developer's Perspective)
 
 *Reflections and key insights from building my first REST API using C# and .NET.*
 
 ---
 
 ### 1. Dependency Injection, Parameter Injection & Managing Parameter Bloat
-> *"In JavaScript, I used to just import a function directly. In C#, I noticed heavy use of Dependency Injection. In Minimal APIs, calling database context or mappers is clean—you pass the service type as a parameter to the handler. However, as an API grows, injecting multiple services (`IMapper`, `ApplicationDbContext`, `ILogger`, `IConfiguration`...) makes parameter lists very long and cluttered."*
+> *"In TypeScript, I used to import modules/functions directly or resolve them from singletons. In C#, I noticed heavy use of framework-level Dependency Injection. In Minimal APIs, calling database context or mappers is clean—you pass the service type as a parameter to the handler. However, as an API grows, injecting multiple services (`IMapper`, `ApplicationDbContext`, `ILogger`, `IConfiguration`...) makes parameter lists very long."*
 
-- **JS Approach**: Importing functions/modules manually (`import { db } from './db.js'`).
+- **TypeScript Approach**: Importing functions/modules directly (`import { db } from './db'`) or using DI containers (like NestJS or `tsyringe`).
 - **C# Minimal API Approach**: Injected via parameter lists `(IMapper mapper, ApplicationDbContext db, ILogger<Program> logger)`.
 - **Flutter / Dart Parallel**: Similar to Service Locators (`GetIt`) or `Provider.of<T>(context)` in Flutter, where a central container provides dependencies.
 - **Handling Long Parameter Lists in C#**: 
@@ -31,15 +31,15 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 ---
 
 ### 3. Database Configuration & Secret Management
-> *"Configuring a database wasn't as simple as placing a database string inside a `.env` file like I was used to in JavaScript. Visual Studio assisted with `UserSecrets` (`secrets.json`). Learning how .NET separates configuration (`appsettings.json`) from local secrets was a new experience."*
+> *"Configuring a database wasn't as simple as placing a database string inside a `.env` file like I was used to in TypeScript / Node.js. Visual Studio assisted with `UserSecrets` (`secrets.json`). Learning how .NET separates configuration (`appsettings.json`) from local secrets was a new experience."*
 
 - Managing sensitive connection strings outside source control using `UserSecretsId` and `builder.Configuration`.
 - Entity Framework Core Code-First approach: mapping C# classes to PostgreSQL relational database tables via migrations.
 
 ---
 
-### 4. Data Transfer Objects (DTOs) & AutoMapper
-> *"In JS, to hide sensitive properties before returning a response, you might filter or delete object properties manually. In C#, industry standard calls for DTOs (`TodoCreateDTO`, `TodoUpdateDTO`, `TodoDTO`). Using DTOs separates database entity models from public API contracts."*
+### 4. Data Transfer Objects (DTOs) & AutoMapper vs. TS Interfaces
+> *"Coming from TypeScript, I'm used to strong typing using `interface` or `type` aliases. In TypeScript, to strip sensitive response fields, you might manually destructure or pick properties. In C#, industry standard calls for DTO classes (`TodoCreateDTO`, `TodoUpdateDTO`, `TodoDTO`) paired with AutoMapper to separate domain entity models from public API contracts."*
 
 - **Domain Model**: `Todo.cs` (contains database metadata, constraints).
 - **Data Transfer Objects**: `TodoCreateDTO` (with strict validation like `[Required(AllowEmptyStrings = false)]`), `TodoUpdateDTO`, `TodoDTO`.
@@ -48,23 +48,23 @@ A lightweight RESTful To-Do Management API built with **C# (.NET 10)**, **ASP.NE
 ---
 
 ### 5. Route Metadata & Response Declarations (`Produces`, `Accepts`)
-> *"Declarative metadata like `.Produces<TodoDTO>(201)`, `.ProducesProblem(400)`, and `.Accepts<DTO>()` felt a bit verbose at first compared to un-typed JS frameworks. However, these annotations feed directly into OpenAPI/Scalar to generate automatic, interactive documentation."*
+> *"Declarative metadata like `.Produces<TodoDTO>(201)`, `.ProducesProblem(400)`, and `.Accepts<DTO>()` felt a bit verbose at first. However, unlike compile-time-only TypeScript types, these C# annotations stay intact at runtime to feed OpenAPI/Scalar for automatic, interactive documentation."*
 
 - OpenAPI integration via Scalar (`app.MapScalarApiReference()`).
-- Strong typing for request inputs and response schemas.
+- Strong typing for request inputs and response schemas available at runtime via reflection.
 
 ---
 
 ### 6. HTTP Results & C# Pattern Matching (`is null`)
-> *"Instead of wrapping everything in manual `try-catch` blocks for basic control flow, Minimal APIs return typed `IResult` objects like `Results.Ok()`, `Results.NotFound()`, and `Results.CreatedAtRoute()`. Also, writing readable pattern matching like `if (todo is null)` felt much more expressive than JS truthiness checks!"*
+> *"In TypeScript, null checks are written as `if (!todo)` or `if (todo === null)`. In C#, writing readable pattern matching like `if (todo is null)` felt very natural and English-like. Also, Minimal APIs return typed `IResult` objects like `Results.Ok()` and `Results.NotFound()` for clean response handling."*
 
 - Expressive C# pattern matching: `if (todo is null) return Results.NotFound();`
 - Consistent HTTP status responses using `Results.*` factories.
 
 ---
 
-### 7. Embracing OOP, Classes, & Access Modifiers
-> *"Coming from functional JavaScript where I avoided classes, writing C# forced me to embrace Object-Oriented Programming (OOP), access modifiers (`public`, `protected`, `static`), and class-based schema definitions. While learning class design and ORM mappings was a shift, it provides strong compile-time safety."*
+### 7. Embracing OOP, C# Classes, & Access Modifiers
+> *"Even though TypeScript supports OOP, I often stayed away from class-heavy patterns in web dev. Writing C# forced me to embrace Object-Oriented Programming (OOP), access modifiers (`public`, `protected`, `static`), and class-based schema definitions. Learning C# class design and EF Core ORM mappings provides strong runtime and compile-time safety."*
 
 ---
 
